@@ -10,6 +10,7 @@ def run_game():
     pygame.display.set_caption(gm_settings.caption)
     
     while True:
+        func.check_events(gm_settings, screen)
         func.update_screen(gm_settings, screen)
     
 run_game()
