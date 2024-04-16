@@ -3,4 +3,4 @@ class Settings:
         self.screen_width = 800
         self.screen_height = 600
         self.bg_colour = (0, 255, 255)
-        self.caption = 'Osama bin Laden vs F-16'
+        self.caption = 'Super Mario Plane'

@@ -1,5 +1,6 @@
 import pygame
 from settings import Settings
+from player import Player
 import functions as func
 
 def run_game():
@@ -9,7 +10,11 @@ def run_game():
     screen = pygame.display.set_mode([gm_settings.screen_width, gm_settings.screen_height])
     pygame.display.set_caption(gm_settings.caption)
     
+    player = Player(screen)
+    
     while True:
-        func.update_screen(gm_settings, screen)
+        func.check_events(gm_settings, screen, player)
+        func.update_screen(gm_settings, screen, player)
+        player.update()
     
 run_game()
