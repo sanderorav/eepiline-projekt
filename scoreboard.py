@@ -6,7 +6,7 @@ class Scoreboard():
         self.screen_rect = screen.get_rect()
         self.game_settings = game_settings
         self.stats = stats
-        self.text_color = (255, 255, 255)
+        self.text_color = (0, 0, 0)
         self.font = pygame.font.SysFont(None, 46)
         self.prepare_score()
         
