@@ -32,12 +32,13 @@ def check_events(game_settings, screen, player, coins, stats):
         elif event.type == ADDCOIN:
             add_coin(game_settings, screen, coins, stats)
 
-def update_screen(game_settings, screen, player, coins, clock):
+def update_screen(game_settings, screen, player, coins, clock, sb):
     screen.fill(game_settings.bg_colour)
     player.blit_me()
     if len(coins) > 0:
         for coin in coins:
             coin.blit_me()
+    sb.draw_score()
     clock.tick(120)
     pygame.display.flip()
     
@@ -45,7 +46,9 @@ def add_coin(game_settings, screen, coins, stats):
     new_coin = Coin(screen, game_settings, stats)
     coins.add(new_coin)
 
-def update_coins(player, coins, stats, game_settings):
+def update_coins(player, coins, stats, sb, game_settings):
     hitted_coin = pygame.sprite.spritecollideany(player, coins)
+    sb.prepare_score()
     if hitted_coin != None:
+        stats.score += 1
         hitted_coin.kill()
