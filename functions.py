@@ -3,14 +3,17 @@ import pygame
 from player import Player
 from coin import Coin
 from robber import Robber
+from terrorist import Terrorist
 
 pygame.init()
 ADDCOIN = pygame.USEREVENT + 1
 pygame.time.set_timer(ADDCOIN, 500)
 ADDROBBER = pygame.USEREVENT + 2
 pygame.time.set_timer(ADDROBBER, 1500)
+ADDTERRORIST = pygame.USEREVENT + 3
+pygame.time.set_timer(ADDTERRORIST, 2500)
 
-def check_events(game_settings, screen, player, coins, robbers, stats, play_button):
+def check_events(game_settings, screen, player, coins, robbers, terrorists, stats, play_button):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -36,6 +39,8 @@ def check_events(game_settings, screen, player, coins, robbers, stats, play_butt
             add_coin(game_settings, screen, coins, stats)
         elif event.type == ADDROBBER:
             add_robber(game_settings, screen, robbers, stats)
+        elif event.type == ADDTERRORIST:
+            add_terrorist(game_settings, screen, terrorists, stats)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             check_play_button(stats, play_button, mouse_x, mouse_y)
@@ -44,7 +49,7 @@ def check_play_button(stats, play_button, mouse_x, mouse_y):
     if play_button.rect.collidepoint(mouse_x, mouse_y):
         stats.game_active = True
 
-def update_screen(game_settings, screen, player, coins, robbers, clock, sb, play_button, stats):
+def update_screen(game_settings, screen, player, coins, robbers, terrorists, clock, sb, play_button, stats):
     screen.fill(game_settings.bg_colour)
     player.blit_me()
     if len(coins) > 0:
@@ -53,9 +58,13 @@ def update_screen(game_settings, screen, player, coins, robbers, clock, sb, play
     if len(robbers) > 0:
         for robber in robbers:
             robber.blit_me()
+    if len(terrorists) > 0:
+        for terrorist in terrorists:
+            terrorist.blit_me()
     if not stats.game_active:
         play_button.draw_button()
-    sb.draw_score()
+    if stats.game_active == True:
+        sb.draw_score()
     clock.tick(120)
     pygame.display.flip()
     
@@ -66,6 +75,10 @@ def add_coin(game_settings, screen, coins, stats):
 def add_robber(game_settings, screen, robbers, stats):
     new_robber = Robber(screen, game_settings, stats)
     robbers.add(new_robber)
+
+def add_terrorist(game_settings, screen, terrorists, stats):
+    new_terrorist = Terrorist(screen, game_settings, stats)
+    terrorists.add(new_terrorist)
 
 def update_coins(player, coins, stats, sb, game_settings):
     hitted_coin = pygame.sprite.spritecollideany(player, coins)
@@ -85,4 +98,12 @@ def update_robbers(player, robbers, stats, sb, game_settings):
             player.is_penalised = True
     elif hitted_robber == None:
         player.is_penalised = False
+    sb.prepare_score()
+    
+def update_terrorists(player, terrorists, stats, sb, game_settings):
+    hitted_terrorist = pygame.sprite.spritecollideany(player, terrorists)
+    if hitted_terrorist != None:
+        stats.game_active = False
+        hitted_terrorist.kill()
+        stats.score = 0
     sb.prepare_score()
