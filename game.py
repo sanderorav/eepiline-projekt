@@ -5,6 +5,7 @@ from scoreboard import Scoreboard
 from player import Player
 from coin import Coin
 from robber import Robber
+from terrorist import Terrorist
 from button import Button
 import functions as func
 
@@ -29,17 +30,22 @@ def run_game():
     
     robbers = pygame.sprite.Group()
     
+    terrorists = pygame.sprite.Group()
+    
     while True:
-        func.check_events(gm_settings, screen, player, coins, robbers, stats, play_button)
+        func.check_events(gm_settings, screen, player, coins, robbers, terrorists, stats, play_button)
         if stats.game_active:
             player.update()
             func.update_coins(player, coins, stats, sb, gm_settings)
             coins.update()
             func.update_robbers(player, robbers, stats, sb, gm_settings)
             robbers.update()
+            func.update_terrorists(player, terrorists, stats, sb, gm_settings)
+            terrorists.update()
         else:
             coins.empty()
             robbers.empty()
-        func.update_screen(gm_settings, screen, player, coins, robbers, clock, sb, play_button, stats)
+            terrorists.empty()
+        func.update_screen(gm_settings, screen, player, coins, robbers, terrorists, clock, sb, play_button, stats)
     
 run_game()
