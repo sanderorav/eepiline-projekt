@@ -4,6 +4,7 @@ from game_stats import GameStats
 from scoreboard import Scoreboard
 from player import Player
 from coin import Coin
+from robber import Robber
 import functions as func
 
 def run_game():
@@ -23,11 +24,15 @@ def run_game():
     
     coins = pygame.sprite.Group()
     
+    robbers = pygame.sprite.Group()
+    
     while True:
-        func.check_events(gm_settings, screen, player, coins, stats)
-        func.update_screen(gm_settings, screen, player, coins, clock, sb)
+        func.check_events(gm_settings, screen, player, coins, robbers, stats)
+        func.update_screen(gm_settings, screen, player, coins, robbers, clock, sb)
         player.update()
         func.update_coins(player, coins, stats, sb, gm_settings)
         coins.update()
+        func.update_robbers(player, robbers, stats, sb, gm_settings)
+        robbers.update()
     
 run_game()
