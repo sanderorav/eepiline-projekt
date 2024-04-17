@@ -68,8 +68,12 @@ def update_coins(player, coins, stats, sb, game_settings):
 def update_robbers(player, robbers, stats, sb, game_settings):
     hitted_robber = pygame.sprite.spritecollideany(player, robbers)
     if hitted_robber != None and not player.is_penalised:
-        stats.score -= 5
-        player.is_penalised = True
+        if stats.score > 5:
+            stats.score -= 5
+            player.is_penalised = True
+        else:
+            stats.score = 0
+            player.is_penalised = True
     elif hitted_robber == None:
         player.is_penalised = False
     sb.prepare_score()
