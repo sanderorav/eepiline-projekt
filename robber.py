@@ -9,11 +9,11 @@ class Robber(pygame.sprite.Sprite):
         self.screen_rect = screen.get_rect()
         self.robber = pygame.image.load('robber.png').convert_alpha()
         self.rect = self.robber.get_rect(
-            center=(
-                random.randint(game_settings.screen_height + 20, game_settings.screen_width + 100),
+            midright=(
+                game_settings.screen_width + 20,
                 random.randint(0, game_settings.screen_height),
-                )
             )
+        )
         self.speed = random.randint(stats.min_speed, stats.max_speed)
         
     def blit_me(self):
