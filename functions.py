@@ -10,34 +10,41 @@ pygame.time.set_timer(ADDCOIN, 500)
 ADDROBBER = pygame.USEREVENT + 2
 pygame.time.set_timer(ADDROBBER, 1500)
 
-def check_events(game_settings, screen, player, coins, robbers, stats):
+def check_events(game_settings, screen, player, coins, robbers, stats, play_button):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                 player.moving_right = True
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                 player.moving_left = True
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_UP or event.key == pygame.K_w:
                 player.moving_up = True
-            if event.key == pygame.K_DOWN:
+            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                 player.moving_down = True
         elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                 player.moving_right = False
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                 player.moving_left = False
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_UP or event.key == pygame.K_w:
                 player.moving_up = False
-            if event.key == pygame.K_DOWN:
+            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                 player.moving_down = False
         elif event.type == ADDCOIN:
             add_coin(game_settings, screen, coins, stats)
         elif event.type == ADDROBBER:
             add_robber(game_settings, screen, robbers, stats)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            check_play_button(stats, play_button, mouse_x, mouse_y)
+            
+def check_play_button(stats, play_button, mouse_x, mouse_y):
+    if play_button.rect.collidepoint(mouse_x, mouse_y):
+        stats.game_active = True
 
-def update_screen(game_settings, screen, player, coins, robbers, clock, sb):
+def update_screen(game_settings, screen, player, coins, robbers, clock, sb, play_button, stats):
     screen.fill(game_settings.bg_colour)
     player.blit_me()
     if len(coins) > 0:
@@ -46,6 +53,8 @@ def update_screen(game_settings, screen, player, coins, robbers, clock, sb):
     if len(robbers) > 0:
         for robber in robbers:
             robber.blit_me()
+    if not stats.game_active:
+        play_button.draw_button()
     sb.draw_score()
     clock.tick(120)
     pygame.display.flip()
