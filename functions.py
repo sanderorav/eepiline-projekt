@@ -85,6 +85,12 @@ def update_coins(player, coins, stats, sb, game_settings):
     sb.prepare_score()
     if hitted_coin != None:
         stats.score += 1
+        if (int(stats.score / game_settings.bonus_score)) > stats.bonus:
+            stats.level += 1
+            sb.prepare_level()
+            stats.bonus += 1
+            stats.min_speed += 1
+            stats.max_speed += 1
         hitted_coin.kill()
 
 def update_robbers(player, robbers, stats, sb, game_settings):
