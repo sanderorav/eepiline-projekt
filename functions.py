@@ -109,7 +109,12 @@ def update_robbers(player, robbers, stats, sb, game_settings):
 def update_terrorists(player, terrorists, stats, sb, game_settings):
     hitted_terrorist = pygame.sprite.spritecollideany(player, terrorists)
     if hitted_terrorist != None:
+        stats.score = 0
+        stats.level = 1
+        stats.bonus = 0
+        stats.min_speed = 1
+        stats.max_speed = 5
         stats.game_active = False
         hitted_terrorist.kill()
-        stats.score = 0
     sb.prepare_score()
+    sb.prepare_level()
