@@ -119,9 +119,3 @@ def update_terrorists(player, terrorists, stats, sb, game_settings):
         hitted_terrorist.kill()
     sb.prepare_score()
     sb.prepare_level()
-
-def check_music(stats):
-    if stats.music_on == True:
-        pygame.mixer.music.play(-1)
-    else:
-        pygame.mixer.music.stop()

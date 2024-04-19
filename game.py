@@ -34,7 +34,6 @@ def run_game():
     
     while True:
         func.check_events(gm_settings, screen, player, coins, robbers, terrorists, stats, play_button)
-        func.check_music(stats)
         if stats.game_active:
             player.update()
             func.update_coins(player, coins, stats, sb, gm_settings)
