@@ -3,6 +3,7 @@ class GameStats():
     
     def __init__(self):
         self.game_active = False
+        self.music_on = True
         self.reset_stats()
     
     def reset_stats(self):

@@ -12,6 +12,7 @@ ADDROBBER = pygame.USEREVENT + 2
 pygame.time.set_timer(ADDROBBER, 1500)
 ADDTERRORIST = pygame.USEREVENT + 3
 pygame.time.set_timer(ADDTERRORIST, 2500)
+pygame.mixer.music.load('music.mp3')
 
 def check_events(game_settings, screen, player, coins, robbers, terrorists, stats, play_button):
     for event in pygame.event.get():
@@ -118,3 +119,9 @@ def update_terrorists(player, terrorists, stats, sb, game_settings):
         hitted_terrorist.kill()
     sb.prepare_score()
     sb.prepare_level()
+
+def check_music(stats):
+    if stats.music_on == True:
+        pygame.mixer.music.play(-1)
+    else:
+        pygame.mixer.music.stop()
