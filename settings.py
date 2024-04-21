@@ -4,3 +4,4 @@ class Settings:
         self.screen_height = 600
         self.bg_colour = (0, 255, 255)
         self.caption = 'Super Mario Plane'
+        self.bonus_score = 30
