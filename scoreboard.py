@@ -14,7 +14,10 @@ class Scoreboard():
         
     def prepare_score(self):
         score_str = str(self.stats.score)
-        self.score_image = self.font.render(score_str, True, self.text_color, self.game_settings.bg_colour)
+        temp_surface = self.font.render(score_str, True, self.text_color)
+        self.score_image = pygame.Surface(temp_surface.get_size(), pygame.SRCALPHA)
+        self.score_image.fill((255, 255, 255, 0))
+        self.score_image.blit(temp_surface, (0, 0))
         self.score_coin = pygame.image.load('coin.png').convert_alpha()
         self.score_image_rect = self.score_image.get_rect()
         self.score_image_rect.left = self.screen_rect.left + 70
@@ -25,14 +28,20 @@ class Scoreboard():
         
     def prepare_level(self):
         level_str = str(self.stats.level)
-        self.level_image = self.font.render('LEVEL: ' + level_str, True, self.text_color, self.game_settings.bg_colour)
+        temp_surface = self.font.render('LEVEL: ' + level_str, True, self.text_color)
+        self.level_image = pygame.Surface(temp_surface.get_size(), pygame.SRCALPHA)
+        self.level_image.fill((255, 255, 255, 0))
+        self.level_image.blit(temp_surface, (0, 0)) 
         self.level_rect = self.level_image.get_rect()
         self.level_rect.left = self.screen_rect.left + 10
         self.level_rect.top = 60
     
     def prepare_record(self):
         record_str = str(self.stats.record)
-        self.record_image = self.font.render('HI-SCORE: ' + record_str, True, self.text_color, self.game_settings.bg_colour)
+        temp_surface = self.font.render('HI-SCORE: ' + record_str, True, self.text_color)
+        self.record_image = pygame.Surface(temp_surface.get_size(), pygame.SRCALPHA)
+        self.record_image.fill((255, 255, 255, 0))
+        self.record_image.blit(temp_surface, (0, 0))
         self.record_rect = self.record_image.get_rect()
         self.record_rect.right = self.screen_rect.right - 10
         self.record_rect.top = 20
