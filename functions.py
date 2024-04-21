@@ -18,7 +18,7 @@ pygame.time.set_timer(ADDTERRORIST, 2500)
 def check_events(game_settings, screen, player, coins, robbers, terrorists, stats, play_button):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            sys.exit()
+            update_record_and_quit(stats)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                 player.moving_right = True
@@ -114,6 +114,7 @@ def update_robbers(player, robbers, stats, sb, game_settings):
 def update_terrorists(player, terrorists, stats, sb, game_settings):
     hitted_terrorist = pygame.sprite.spritecollideany(player, terrorists)
     if hitted_terrorist != None:
+        update_record(stats)
         stats.score = 0
         stats.level = 1
         stats.bonus = 0
@@ -129,3 +130,10 @@ def check_music(stats):
         pygame.mixer.music.play(-1)
     else:
         pygame.mixer.music.stop()
+
+def update_record(stats):
+    stats.record_saver(stats.score)
+
+def update_record_and_quit(stats):
+    stats.record_saver(stats.score)
+    sys.exit()
