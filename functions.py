@@ -6,13 +6,14 @@ from robber import Robber
 from terrorist import Terrorist
 
 pygame.init()
+pygame.mixer.init(44100, -16, 2, 2048)
+pygame.mixer.music.load('music.wav')
 ADDCOIN = pygame.USEREVENT + 1
 pygame.time.set_timer(ADDCOIN, 500)
 ADDROBBER = pygame.USEREVENT + 2
 pygame.time.set_timer(ADDROBBER, 1500)
 ADDTERRORIST = pygame.USEREVENT + 3
 pygame.time.set_timer(ADDTERRORIST, 2500)
-pygame.mixer.music.load('music.mp3')
 
 def check_events(game_settings, screen, player, coins, robbers, terrorists, stats, play_button):
     for event in pygame.event.get():
@@ -27,6 +28,9 @@ def check_events(game_settings, screen, player, coins, robbers, terrorists, stat
                 player.moving_up = True
             if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                 player.moving_down = True
+            if event.key == pygame.K_m:
+                stats.music_on = not stats.music_on
+                check_music(stats)
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                 player.moving_right = False
@@ -119,3 +123,9 @@ def update_terrorists(player, terrorists, stats, sb, game_settings):
         hitted_terrorist.kill()
     sb.prepare_score()
     sb.prepare_level()
+    
+def check_music(stats):
+    if stats.music_on == True:
+        pygame.mixer.music.play(-1)
+    else:
+        pygame.mixer.music.stop()
