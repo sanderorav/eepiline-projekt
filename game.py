@@ -32,6 +32,8 @@ def run_game():
     
     terrorists = pygame.sprite.Group()
     
+    func.check_music(stats)
+    
     while True:
         func.check_events(gm_settings, screen, player, coins, robbers, terrorists, stats, play_button)
         if stats.game_active:
