@@ -8,6 +8,7 @@ from terrorist import Terrorist
 pygame.init()
 pygame.mixer.init(44100, -16, 2, 2048)
 pygame.mixer.music.load('music.wav')
+pygame.mixer.music.set_volume(0.3)
 ADDCOIN = pygame.USEREVENT + 1
 pygame.time.set_timer(ADDCOIN, 500)
 ADDROBBER = pygame.USEREVENT + 2
