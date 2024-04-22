@@ -15,6 +15,10 @@ pygame.time.set_timer(ADDROBBER, 1500)
 ADDTERRORIST = pygame.USEREVENT + 3
 pygame.time.set_timer(ADDTERRORIST, 2500)
 
+coin_sfx = pygame.mixer.Sound('coin.mp3')
+robber_sfx = pygame.mixer.Sound('robber.mp3')
+game_over_sfx = pygame.mixer.Sound('gameover.mp3')
+
 def check_events(game_settings, screen, player, coins, robbers, terrorists, stats, play_button):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -89,6 +93,7 @@ def update_coins(player, coins, stats, sb, game_settings):
     hitted_coin = pygame.sprite.spritecollideany(player, coins)
     sb.prepare_score()
     if hitted_coin != None:
+        coin_sfx.play()
         stats.score += 1
         if (int(stats.score / game_settings.bonus_score)) > stats.bonus:
             stats.level += 1
@@ -101,6 +106,7 @@ def update_coins(player, coins, stats, sb, game_settings):
 def update_robbers(player, robbers, stats, sb, game_settings):
     hitted_robber = pygame.sprite.spritecollideany(player, robbers)
     if hitted_robber != None and not player.is_penalised:
+        robber_sfx.play()
         if stats.score > 5:
             stats.score -= 5
             player.is_penalised = True
@@ -114,6 +120,7 @@ def update_robbers(player, robbers, stats, sb, game_settings):
 def update_terrorists(player, terrorists, stats, sb, game_settings):
     hitted_terrorist = pygame.sprite.spritecollideany(player, terrorists)
     if hitted_terrorist != None:
+        game_over_sfx.play()
         update_record(stats)
         stats.score = 0
         stats.level = 1
