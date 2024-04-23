@@ -20,7 +20,7 @@ ADDSTAR = pygame.USEREVENT + 4
 pygame.time.set_timer(ADDSTAR, 2500)
 
 coin_sfx = pygame.mixer.Sound('coin.mp3')
-robber_sfx = pygame.mixer.Sound('robber.mp3')
+robber_sfx = pygame.mixer.Sound('robber_parem.mp3')
 star_sfx = pygame.mixer.Sound('star.mp3')
 game_over_sfx = pygame.mixer.Sound('gameover.mp3')
 
