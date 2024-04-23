@@ -16,6 +16,8 @@ To run the game, follow these steps:
 * Enjoy the game.
 
 ### How to play 🎮
+You are controlling Mario. Try to collect as many coins as possible and avoid enemies.
+
 #### Items
 * Coins - add 1 point to your score.
 * Stars - add 5 points to your score.
