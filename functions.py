@@ -65,7 +65,7 @@ def check_play_button(stats, play_button, mouse_x, mouse_y):
         stats.game_active = True
 
 def update_screen(game_settings, screen, player, coins, robbers, terrorists, stars, clock, sb, play_button, stats):
-    screen.fill(game_settings.bg_colour)
+    # screen.fill(game_settings.bg_colour)
     player.blit_me()
     if len(coins) > 0:
         for coin in coins:

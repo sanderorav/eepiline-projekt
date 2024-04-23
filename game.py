@@ -17,6 +17,8 @@ def run_game():
     screen = pygame.display.set_mode([gm_settings.screen_width, gm_settings.screen_height])
     pygame.display.set_caption(gm_settings.caption)
     
+    background_image = pygame.image.load('background_parem_kui_varem.png')
+    
     play_button = Button(gm_settings, screen, 'PLAY')
     
     clock = pygame.time.Clock()
@@ -54,6 +56,8 @@ def run_game():
             robbers.empty()
             terrorists.empty()
             stars.empty()
+        
+        screen.blit(background_image, (0, 0))
         func.update_screen(gm_settings, screen, player, coins, robbers, terrorists, stars, clock, sb, play_button, stats)
     
 run_game()
