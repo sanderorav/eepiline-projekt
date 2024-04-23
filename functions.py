@@ -21,6 +21,7 @@ pygame.time.set_timer(ADDSTAR, 2500)
 
 coin_sfx = pygame.mixer.Sound('coin.mp3')
 robber_sfx = pygame.mixer.Sound('robber.mp3')
+star_sfx = pygame.mixer.Sound('star.mp3')
 game_over_sfx = pygame.mixer.Sound('gameover.mp3')
 
 def check_events(game_settings, screen, player, coins, robbers, terrorists, stars, stats, play_button):
@@ -149,7 +150,7 @@ def update_stars(player, stars, stats, sb, game_settings):
     hitted_star = pygame.sprite.spritecollideany(player, stars)
     sb.prepare_score()
     if hitted_star != None:
-        coin_sfx.play()
+        star_sfx.play()
         stats.score += 5
         if (int(stats.score / game_settings.bonus_score)) > stats.bonus:
             stats.level += 1
