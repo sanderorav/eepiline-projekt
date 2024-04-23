@@ -4,6 +4,7 @@ from player import Player
 from coin import Coin
 from robber import Robber
 from terrorist import Terrorist
+from star import Star
 
 pygame.init()
 pygame.mixer.init(44100, -16, 2, 2048)
@@ -15,12 +16,14 @@ ADDROBBER = pygame.USEREVENT + 2
 pygame.time.set_timer(ADDROBBER, 1500)
 ADDTERRORIST = pygame.USEREVENT + 3
 pygame.time.set_timer(ADDTERRORIST, 2500)
+ADDSTAR = pygame.USEREVENT + 4
+pygame.time.set_timer(ADDSTAR, 2500)
 
 coin_sfx = pygame.mixer.Sound('coin.mp3')
 robber_sfx = pygame.mixer.Sound('robber.mp3')
 game_over_sfx = pygame.mixer.Sound('gameover.mp3')
 
-def check_events(game_settings, screen, player, coins, robbers, terrorists, stats, play_button):
+def check_events(game_settings, screen, player, coins, robbers, terrorists, stars, stats, play_button):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             update_record_and_quit(stats)
@@ -51,6 +54,8 @@ def check_events(game_settings, screen, player, coins, robbers, terrorists, stat
             add_robber(game_settings, screen, robbers, stats)
         elif event.type == ADDTERRORIST:
             add_terrorist(game_settings, screen, terrorists, stats)
+        elif event.type == ADDSTAR:
+            add_star(game_settings, screen, stars, stats)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             check_play_button(stats, play_button, mouse_x, mouse_y)
@@ -59,7 +64,7 @@ def check_play_button(stats, play_button, mouse_x, mouse_y):
     if play_button.rect.collidepoint(mouse_x, mouse_y):
         stats.game_active = True
 
-def update_screen(game_settings, screen, player, coins, robbers, terrorists, clock, sb, play_button, stats):
+def update_screen(game_settings, screen, player, coins, robbers, terrorists, stars, clock, sb, play_button, stats):
     screen.fill(game_settings.bg_colour)
     player.blit_me()
     if len(coins) > 0:
@@ -71,6 +76,9 @@ def update_screen(game_settings, screen, player, coins, robbers, terrorists, clo
     if len(terrorists) > 0:
         for terrorist in terrorists:
             terrorist.blit_me()
+    if len(stars) > 0:
+        for star in stars:
+            star.blit_me()
     if not stats.game_active:
         play_button.draw_button()
     if stats.game_active == True:
@@ -89,6 +97,10 @@ def add_robber(game_settings, screen, robbers, stats):
 def add_terrorist(game_settings, screen, terrorists, stats):
     new_terrorist = Terrorist(screen, game_settings, stats)
     terrorists.add(new_terrorist)
+
+def add_star(game_settings, screen, stars, stats):
+    new_star = Star(screen, game_settings, stats)
+    stars.add(new_star)
 
 def update_coins(player, coins, stats, sb, game_settings):
     hitted_coin = pygame.sprite.spritecollideany(player, coins)
@@ -133,6 +145,20 @@ def update_terrorists(player, terrorists, stats, sb, game_settings):
     sb.prepare_score()
     sb.prepare_level()
     sb.prepare_record()
+
+def update_stars(player, stars, stats, sb, game_settings):
+    hitted_star = pygame.sprite.spritecollideany(player, stars)
+    sb.prepare_score()
+    if hitted_star != None:
+        coin_sfx.play()
+        stats.score += 5
+        if (int(stats.score / game_settings.bonus_score)) > stats.bonus:
+            stats.level += 1
+            sb.prepare_level()
+            stats.bonus += 1
+            stats.min_speed += 1
+            stats.max_speed += 1
+        hitted_star.kill()
     
 def check_music(stats):
     if stats.music_on == True:

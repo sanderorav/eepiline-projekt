@@ -18,7 +18,7 @@ class Scoreboard():
         self.score_image = pygame.Surface(temp_surface.get_size(), pygame.SRCALPHA)
         self.score_image.fill((255, 255, 255, 0))
         self.score_image.blit(temp_surface, (0, 0))
-        self.score_coin = pygame.image.load('coin.png').convert_alpha()
+        self.score_coin = pygame.image.load('coin_parem_kui_varem.png').convert_alpha()
         self.score_image_rect = self.score_image.get_rect()
         self.score_image_rect.left = self.screen_rect.left + 70
         self.score_image_rect.top = 20

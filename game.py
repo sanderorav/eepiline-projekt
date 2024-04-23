@@ -6,6 +6,7 @@ from player import Player
 from coin import Coin
 from robber import Robber
 from terrorist import Terrorist
+from star import Star
 from button import Button
 import functions as func
 
@@ -32,10 +33,12 @@ def run_game():
     
     terrorists = pygame.sprite.Group()
     
+    stars = pygame.sprite.Group()
+    
     func.check_music(stats)
     
     while True:
-        func.check_events(gm_settings, screen, player, coins, robbers, terrorists, stats, play_button)
+        func.check_events(gm_settings, screen, player, coins, robbers, terrorists, stars, stats, play_button)
         if stats.game_active:
             player.update()
             func.update_coins(player, coins, stats, sb, gm_settings)
@@ -44,10 +47,13 @@ def run_game():
             robbers.update()
             func.update_terrorists(player, terrorists, stats, sb, gm_settings)
             terrorists.update()
+            func.update_stars(player, stars, stats, sb, gm_settings)
+            stars.update()
         else:
             coins.empty()
             robbers.empty()
             terrorists.empty()
-        func.update_screen(gm_settings, screen, player, coins, robbers, terrorists, clock, sb, play_button, stats)
+            stars.empty()
+        func.update_screen(gm_settings, screen, player, coins, robbers, terrorists, stars, clock, sb, play_button, stats)
     
 run_game()
