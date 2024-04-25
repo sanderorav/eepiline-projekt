@@ -15,7 +15,7 @@ pygame.time.set_timer(ADDCOIN, 500)
 ADDROBBER = pygame.USEREVENT + 2
 pygame.time.set_timer(ADDROBBER, 1500)
 ADDTERRORIST = pygame.USEREVENT + 3
-pygame.time.set_timer(ADDTERRORIST, 2500)
+pygame.time.set_timer(ADDTERRORIST, 2000)
 ADDSTAR = pygame.USEREVENT + 4
 pygame.time.set_timer(ADDSTAR, 2500)
 
