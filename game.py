@@ -16,6 +16,10 @@ def run_game():
 
     screen = pygame.display.set_mode([gm_settings.screen_width, gm_settings.screen_height])
     pygame.display.set_caption(gm_settings.caption)
+
+    window_icon = pygame.image.load('supermario.png')
+
+    pygame.display.set_icon(window_icon)
     
     background_image = pygame.image.load('background_parem_kui_varem.png')
     
