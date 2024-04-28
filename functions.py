@@ -64,6 +64,10 @@ def check_events(game_settings, screen, player, coins, robbers, terrorists, star
 def check_play_button(stats, play_button, mouse_x, mouse_y):
     if play_button.rect.collidepoint(mouse_x, mouse_y):
         stats.game_active = True
+        stats.game_fresh = False
+        stats.score = 0
+        stats.level = 1
+        stats.bonus = 0
 
 def update_screen(game_settings, screen, player, coins, robbers, terrorists, stars, clock, sb, play_button, stats):
     player.blit_me()
@@ -81,7 +85,7 @@ def update_screen(game_settings, screen, player, coins, robbers, terrorists, sta
             star.blit_me()
     if not stats.game_active:
         play_button.draw_button()
-    if stats.game_active == True:
+    if stats.game_fresh == False:
         sb.draw_score()
     clock.tick(120)
     pygame.display.flip()
@@ -135,9 +139,6 @@ def update_terrorists(player, terrorists, stats, sb, game_settings):
     if hitted_terrorist != None:
         game_over_sfx.play()
         update_record(stats)
-        stats.score = 0
-        stats.level = 1
-        stats.bonus = 0
         stats.min_speed = 1
         stats.max_speed = 5
         stats.game_active = False
